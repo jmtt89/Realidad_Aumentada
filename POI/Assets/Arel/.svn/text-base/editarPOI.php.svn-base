@@ -1,0 +1,31 @@
+<div data-role="page" style="display:inline;" data-theme="b" data-add-back-btn="false" data-rel="">
+<div data-role="header" data-theme="a">
+<div class="cerrar"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/close.png"></div>
+  <h1>Actualizar POI</h1>
+</div>
+<div data-role="content">
+  <form id="formEditarPOI" method="POST"> 
+    <input type="hidden" name="idPOI" id="idPOIEditarPOI" value=""/>
+    <label for="Title">Titulo</label>
+    <input name="Title" id="TitleEditarPOI" value="" type="text" />
+    <label for="Description"> Descripcion </label>
+    <input name="Description" id="DescriptionEditarPOI" value="" type="text" />
+    <input id="botonEditarPOI" type="submit" data-theme="a" value="Actualizar"/>
+  </form>
+</div>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#botonEditarPOI").click(function(){
+      var formulario = $("#formEditarPOI").serializeArray();
+      $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Action.Update-POI.php",
+        data: formulario
+      });
+      
+      ocultarPopUp();
+    });
+  });
+</script>

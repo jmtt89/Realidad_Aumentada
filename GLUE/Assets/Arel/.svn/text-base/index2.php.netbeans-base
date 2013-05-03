@@ -1,0 +1,188 @@
+<?php
+  require_once("../../Clases/Interface_F.php");
+  $instancia = Interface_F::singleton();
+
+  $UID = $_GET['UID'];
+  unset($_POST);
+  $_POST['UID'] = $UID;
+  $_POST['TIPO'] = 'Consulta';
+  $Consultas = $instancia->obtenerTodos(); //Todos los POI's
+
+  $POIS = array();
+  foreach($Consultas as $Consulta){
+    $_POST['idPOI']= $Consulta->idPOI;
+    $_POST['TIPO'] = 'POI'; //Tabla
+    $POIS[] = $instancia->Obtener();
+  }
+    
+  unset($_POST);
+  $_POST['UID'] = $UID;
+  $_POST['TIPO'] = 'Crea';
+  $M_Crea = $instancia->obtenerTodos(); //POI's Creados por mi
+    
+  $M_POIS = array();
+  foreach($M_Crea as $Crea){
+    $_POST['idPOI']= $Crea->idPOI;
+    $_POST['TIPO'] = 'POI'; //Tabla
+    $M_POIS[] = $instancia->Obtener();
+  }  
+?>
+
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Libraries/jquery-1.4.3.min.js"></script>
+        
+        
+
+        <script type="text/javascript" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/JavaScripts/tmpProy.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Styles/tmpProy.css">
+      
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <link rel="stylesheet" type="text/css" href="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Styles/jquery-gmaps.css">
+        <script src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/JavaScripts/jquery-gmaps.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Styles/jquery.mobile-1.0a1.min.css">
+        <script src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Libraries/jquery.mobile-1.0a1.min.js"></script>
+              
+        <title>Aplicacion de Prueba.</title>
+    </head>
+    <body>
+      <div class="popUp">
+        <div class="cerrar"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/close.png"></div>
+        <div id="textoPopUp">
+          <div id="mostrarAgregarPOI">
+            <h1>Info de agregar POI</h1>
+            <?php include("agregarPOI.php"); ?>
+          </div>
+          <div id="mostrarEditarPOI">
+            <h1>Editar POI</h1>
+            <?php include("editarPOI.php"); ?>          
+          </div>
+          <div id="mostrarAgregarMULTI">
+            <h1>Agregar Multimedia</h1>
+            <?php include("Form.Create.Multimedia.php"); ?>          
+          </div>          
+          <div id="mostrarMisPOIs">
+              <h1>Mis POIs</h1>
+            <?php 
+                $Par = True;
+                $i=0;
+                foreach($M_POIS as $POI){
+                    
+                    if($Par){
+                        echo '<div  class="barra par">';
+                    }else{
+                        echo '<div class="barra impar">';
+                    }
+                    
+                    echo '<img onclick=\'$("#opc'.$i.'").slideToggle();\' src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/opt.png">';
+                                     
+                    
+                    unset($_POST);
+                    $_POST['UID']   = $UID;
+                    $_POST['idPOI'] = $POI->idPOI;
+                    $_POST['TIPO']  = 'Consulta';
+                    $Consulta = $instancia->obtener(); //Todos los POI's
+                                       
+                    
+                    echo '<div class="info">';
+                  echo '<strong>'.$POI->Title.'</strong><br/>';
+                  echo '<strong>Latitud:</strong> '.$POI->Latitud.' y <strong>Longitud:</strong>'.$POI->Longitud.'<br/>';
+                    echo '<strong>Descripcion:</strong> '.$POI->Description.' <br/>';
+                    echo '</div>';
+                    echo '</div>';                    
+                    echo '<div class="opciones" id="opc'.$i.'">';
+                    echo '<img onclick="mostrarAMULTI('.$POI->idPOI.');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/del.png">';                                  
+                    
+                      if($Consulta->Visibilidad == 't')
+                        echo '<img onclick="Cambiar_Visibilidad(\''.$UID.'\','.$POI->idPOI.',\'false\');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/vis.png">';
+                      else
+                        echo '<img onclick="Cambiar_Visibilidad(\''.$UID.'\','.$POI->idPOI.',\'true\');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/Nvis.png">';                    
+                      echo '<img onclick="llenarInfo('.$POI->idPOI.');" class="editar" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/edit.png">
+                            <img onclick="eliminar('.$POI->idPOI.');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/del.png">';                                  
+
+                    
+                    unset($_POST);
+                    $_POST['idPOI'] = $POI->idPOI;
+                    $_POST['TIPO']  = 'Multimedia';
+                    $Multimedias = $instancia->obtenerTodos(); //Todos los POI's
+                    
+                    foreach($Multimedias as $Multimedia){
+                        if($Par)
+                        echo '<div  class="mpar">';
+                        else
+                        echo '<div class="mimpar">';
+                            switch ($Multimedia->Type) {
+                              case 'soundButton':
+                                  echo '<img class="tipoMULTI" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/m_music.png">';
+                                  break;
+                              case 'imageButton':
+                                  echo '<img class="tipoMULTI" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/m_pictures.png">';
+                                  break;
+                              default:
+                                  echo '<img class="tipoMULTI" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/m_videos.png">';
+                                  break;
+                            }
+
+                            echo '<info>';
+                            echo '<strong>Texto en el Boton: '.$Multimedia->Text.'</strong>';
+                            echo '</info>';
+                            echo '<img class="eliminarMULTI" onclick="eliminarMULTI('.$POI->idPOI.','.$Multimedia->idMultimedia.');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/del.png">';    
+                        echo '</div>' ;
+                    }
+                    echo '</div>';
+                    $i = $i+1;
+                    $Par = !$Par;
+                }
+            ?>
+          </div>
+          <div id="mostrarTodosPOIs">
+              <h1>Todos los POIS</h1>
+            <?php
+                $Par = True;
+                foreach($POIS as $POI){
+                    
+                    if($Par){
+                        echo '<div class="barra par">';
+                    }else{
+                        echo '<div class="barra impar">';
+                    }
+                    
+                    unset($_POST);
+                    $_POST['UID']   = $UID;
+                    $_POST['idPOI'] = $POI->idPOI;
+                    $_POST['TIPO']  = 'Consulta';
+                    $Consulta = $instancia->obtener(); //Todos los POI's                    
+                    
+                      if($Consulta->Visibilidad == 't')
+                        echo '<img onclick="Cambiar_Visibilidad(\''.$UID.'\','.$POI->idPOI.',\'false\');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/vis.png">';
+                      else
+                        echo '<img onclick="Cambiar_Visibilidad(\''.$UID.'\','.$POI->idPOI.',\'true\');" src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/Nvis.png">';  
+                        
+                    echo '<div class="info">';
+                  echo '<strong>'.$POI->Title.'</strong><br/>';
+                  echo '<strong>Latitud:</strong> '.$POI->Latitud.' y <strong>Longitud:</strong>'.$POI->Longitud.'<br/>';
+                    echo '<strong>Descripcion:</strong> '.$POI->Description.' <br/>';
+                    echo '</div>';
+                    echo '</div>';                   
+                    $i = $i+1;
+                    $Par = !$Par;
+                }            
+            ?>
+          </div>
+        </div>
+      </div>
+      <div class="botones">
+        <div id="nivelDos">
+          <div id="mispois" class="boton"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/mine.png"></div>
+          <div id="pois" class="boton"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/all.png"></div>
+          <div style="clear: both"></div>
+        </div>
+        <div id="nivelUno">
+          <div id="agregar" class="boton"href="#"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/add.png"></div>
+          <div id="listar" class="boton" href="#"><img src="http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/tmp/list.png"></div>
+          <div style="clear: both"></div>
+        </div>
+      </div>
+    </body>
+</html>

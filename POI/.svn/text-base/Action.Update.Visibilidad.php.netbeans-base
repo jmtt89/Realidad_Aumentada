@@ -1,0 +1,25 @@
+<?php
+    require_once("Clases/Interface_F.php");
+    $instancia = Interface_F::singleton();
+    
+    /*
+    $_GET['UID'] = "0001";
+    $_GET['idPOI'] = "1";
+    $_GET['Visibilidad'] = true;
+    */
+    
+    $uid = $_POST['UID'];
+    $_POST['TIPO'] = "Consulta";
+    //PRE: $_POST Tiene UID,idPOI,Visibilidad
+    $instancia->actualizar();
+    //POST: Consulta Actualizada
+    
+    //$instancia->Agregar_Multimedia();
+    
+    
+    $_POST['Return'] = True;
+    
+    $dir = "index.php?uid=".$uid;
+    
+    header('Location: '.$dir);
+?>

@@ -1,0 +1,57 @@
+.botones {
+  position:absolute;
+  bottom:0px;
+  overflow:hidden;
+  width:100%;
+}
+
+.boton {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+#agregar {
+  float:left;
+}
+
+#listar, #mispois, #pois, .cerrar {
+  float: right;
+}
+
+a {
+  text-decoration: none;
+}
+
+.popUp {
+  z-index:2;
+  background-color: #DDD;
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+.cerrar img {
+  width:50px;
+}
+
+.barra, .opciones {border:2px solid #B1B1B1;}
+.barra{padding: 5px;}
+.options{background:#F1F1F1; padding: 10px;}
+.barra img {float:right; width:50px;}
+.opciones {text-align: center;}
+.opciones img {width:75px;}
+.boton img {width:75px;}
+
+.mpar, .mimpar {border:1px solid #B1B1B1;height:48px;}
+.mpar {background:#E1E1E1;}
+.mimpar {background:#D1D1D1;} 
+.par {background:rgb(201,220,250);}
+.impar {background:rgb(150,183,233);}
+.tipoMULTI {float:left; width:48px !important; background-color:#B1B1B1;}
+.eliminarMULTI {float:right; width: 24px !important; margin:12px;}
+
+.ui-btn-inner, .ui-btn-corner-all, .ui-header ui-btn,.ui-footer .ui-btn, .ui-bar .ui-btn{
+display:none;
+}

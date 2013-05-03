@@ -1,0 +1,125 @@
+function ocultarSec() {
+  $("#mostrarEditarPOI").hide();
+  $("#mostrarAgregarPOI").hide();
+  $("#mostrarMisPOIs").hide();
+  $("#mostrarTodosPOIs").hide();
+}
+
+function ocultarPopUp() {
+  $(".popUp").fadeOut();
+}
+
+function ocultarPopUp2() {
+  $(".popUp").hide();
+}
+
+function mostrarPopUp() {
+  $(".botones").fadeOut();
+  $(".popUp").fadeIn();
+}
+
+function ocultarBotonesSec(){
+  $("#nivelDos").hide();  
+}
+
+function mostrarBotonesSec(){
+  $("#nivelDos").fadeIn();
+}
+
+function ocultarBotones() {
+  $(".botones").fadeOut();  
+}
+
+function mostrarBotones(){
+  $(".botones").fadeIn();  
+}
+
+function mostrarAgregar() {
+  mostrarPopUp();
+  ocultarSec();
+  $("#mostrarAgregarPOI").show();  
+}
+
+function mostrarEditar() {
+  mostrarPopUp();
+  ocultarSec();
+  $("#mostrarEditarPOI").show();  
+}
+
+function cerrar(){
+  ocultarPopUp2();
+  mostrarBotones();
+  ocultarBotonesSec();
+}
+
+function mostrarMios() {
+  mostrarPopUp();
+  ocultarSec();
+  $("#mostrarMisPOIs").show();  
+}
+
+function mostrarTodos() {
+  mostrarPopUp();
+  ocultarSec();
+  $("#mostrarTodosPOIs").show();  
+}
+
+function ocultarOpc() {
+  $(".opciones").hide();
+}
+
+function llenarInfo(elemento) {
+  var url = "http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Search.POI.php?idPOI="+elemento;
+  $.get(url, function(data,status) {
+    alert(data);
+    datos = data.split("\"");
+    alert("Asignando a id:"+datos[3]+", el titulo:"+datos[19]+" y la descripcion:"+datos[31]);
+    $("#idPOI").val(datos[3]);
+    $("#Title").val(datos[19]);
+    $("#Description").val(datos[31]);
+  });
+}
+
+function llenarInfo2(elemento) {
+  var url = "http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Search.POI.php?idPOI="+elemento;
+  $.get(url, function(data,status) {
+    datos = $.parseJSON(data);
+    alert();
+    alert(datos.Title);
+    alert(datos.Description);
+    var id = ""+datos.idPOI+"";
+    var tit = ""+datos.Title+"";
+    var des = ""+Description+"";
+    $("#idPOI").val(id);
+    $("#Title").val(tit);
+    $("#Description").val(des);    
+  })
+}
+$(document).ready(function(){
+  ocultarPopUp();
+  ocultarBotonesSec();
+  ocultarOpc();
+  $("#agregar").click(function() {
+    mostrarAgregar();
+  });
+  
+  $(".editar").click(function() {
+    mostrarEditar();
+  });  
+
+  $("#listar").click(function() {
+    mostrarBotonesSec();
+  });
+
+  $(".cerrar").click(function() {
+    cerrar();
+  });
+
+  $("#mispois").click(function() {
+    mostrarMios();
+  });
+
+  $("#pois").click(function() {
+    mostrarTodos();
+  });   
+});

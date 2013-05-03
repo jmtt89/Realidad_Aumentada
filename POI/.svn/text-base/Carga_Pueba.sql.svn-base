@@ -1,0 +1,54 @@
+--- Usuario
+INSERT INTO "0640386"."Usuario"("UID", "Nombre_Usuario")
+    VALUES ('0001', 'UserI');
+
+--- POI
+INSERT INTO "0640386"."POI"("Latitud", "Longitud", "Altitud", "Title", "Thumb","Icon", "Description")
+    VALUES ('10.446014', '-66.863621', '0', 'POI 1', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/thumb_custom.png', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/icon_custom.png', 'Primer POI de Prueba');
+
+INSERT INTO "0640386"."POI"("Latitud", "Longitud", "Altitud", "Title", "Thumb","Icon", "Description")
+    VALUES ('10.446280', '-66.863259', '0', 'POI 2', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/thumb_custom.png', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/icon_custom.png', 'Segunda POI de Prueba');
+
+INSERT INTO "0640386"."POI"("Latitud", "Longitud", "Altitud", "Title", "Thumb","Icon", "Description")
+    VALUES ('10.446584', '-66.864061', '0', 'POI 3', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/thumb_custom.png', 'http://realidadaumentada.ldc.usb.ve/ar0640386/Debug/Assets/Images/Icons/icon_custom.png', 'Tercera POI de Prueba');
+
+--- Crea
+INSERT INTO "0640386"."Crea"("UID", "idPOI")
+    VALUES ('0001', 1);
+
+INSERT INTO "0640386"."Crea"("UID", "idPOI")
+    VALUES ('0001', 2);
+
+INSERT INTO "0640386"."Crea"("UID", "idPOI")
+    VALUES ('0001', 3);
+
+--- Consulta
+INSERT INTO "0640386"."Consulta"("UID", "idPOI", "Visibilidad")
+    VALUES ('0001', 1, '1');
+
+INSERT INTO "0640386"."Consulta"("UID", "idPOI", "Visibilidad")
+    VALUES ('0001', 2, '0');
+
+INSERT INTO "0640386"."Consulta"("UID", "idPOI", "Visibilidad")
+    VALUES ('0001', 3, '1');
+
+--- Multimeda
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (2, 'soundButton', 'Play', 'http://dev.junaio.com/publisherDownload/tutorial/test.mp3');
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (2, 'movieButton', 'Movie', 'http://www.junaio.com/publisherDownload/tutorial/movie.mp4');
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (3, 'soundButton', 'Play', 'http://dev.junaio.com/publisherDownload/tutorial/test.mp3');
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (3, 'movieButton', 'Movie', 'http://www.junaio.com/publisherDownload/tutorial/movie.mp4');
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (3, 'imageButton', 'Zoom', 'http://t3.gstatic.com/images?q=tbn:ANd9GcRPLNtH-Ph_xQaEArtVoadFT4VsPI0fTYaqVcVaaHqXbfIjo1p1Jg');
+
+INSERT INTO "0640386"."Multimedia"("idPOI", "Type", "Text", src)
+    VALUES (3, 'imageButton', 'Zoom', 'http://img337.imageshack.us/img337/6967/junaio.png');
+
